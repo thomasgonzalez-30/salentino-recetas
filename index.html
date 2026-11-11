@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual de Recetas — Salentino × Calcot</title>
+  <meta name="description" content="Recetas de bebidas a base de café para el evento Calcot. Salentino, aliado de bebidas.">
+  <meta name="theme-color" content="#2C1810">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --coffee-900: #1a0f0a;
+      --coffee-800: #2C1810;
+      --coffee-700: #3d2317;
+      --coffee-600: #5c3a2a;
+      --coffee-500: #7a5240;
+      --coffee-400: #a07862;
+      --coffee-300: #c4a68e;
+      --coffee-200: #e0cfc2;
+      --coffee-100: #f0e8e0;
+      --coffee-50: #faf6f2;
+      --cream: #fdfbf9;
+      --accent: #c97b3a;
+      --accent-light: #e8a85c;
+      --tonic-blue: #4a9ebb;
+      --latte-purple: #8b6bb0;
+      --drip-amber: #c9943a;
+      --success: #4a8b5c;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 2px 8px rgba(44, 24, 16, 0.08);
+      --shadow-md: 0 4px 20px rgba(44, 24, 16, 0.12);
+      --shadow-lg: 0 8px 40px rgba(44, 24, 16, 0.16);
+    }
+
+    body {
+      font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+      background: var(--coffee-50);
+      color: var(--coffee-800);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--coffee-900) 0%, var(--coffee-700) 100%);
+      color: var(--cream);
+      padding: 3rem 1.5rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 70%, rgba(201, 123, 58, 0.15) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 0.35rem 1rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h1 span {
+      color: var(--accent-light);
+    }
+
+    .hero-sub {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      max-width: 320px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .hero-dates {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* Nav tabs */
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid var(--coffee-200);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav {
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      gap: 0.25rem;
+      padding: 0.5rem 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .nav::-webkit-scrollbar { display: none; }
+
+    .nav-btn {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1rem;
+      border: none;
+      background: transparent;
+      border-radius: 100px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--coffee-500);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .nav-btn:hover { background: var(--coffee-100); }
+
+    .nav-btn.active {
+      background: var(--coffee-800);
+      color: var(--cream);
+    }
+
+    .nav-btn .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Main */
+    .main {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 1.25rem 1rem 6rem;
+    }
+
+    /* Recipe sections */
+    .recipe-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .recipe-section.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cards */
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 1rem;
+      overflow: hidden;
+      border: 1px solid var(--coffee-100);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .card-header:active { background: var(--coffee-50); }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .card-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .card-chevron {
+      transition: transform 0.25s ease;
+      color: var(--coffee-400);
+    }
+
+    .card.open .card-chevron { transform: rotate(180deg); }
+
+    .card-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .card.open .card-body { max-height: 2000px; }
+
+    .card-content { padding: 0 1.25rem 1.25rem; }
+
+    /* Recipe type badge */
+    .type-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    /* Ingredient table */
+    .ingredient-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.75rem 0;
+      font-size: 0.85rem;
+    }
+
+    .ingredient-table th {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      background: var(--coffee-100);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--coffee-600);
+    }
+
+    .ingredient-table th:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+    .ingredient-table th:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+
+    .ingredient-table td {
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid var(--coffee-100);
+    }
+
+    .ingredient-table tr:last-child td { border-bottom: none; }
+
+    .ingredient-table .qty {
+      font-weight: 600;
+      color: var(--coffee-700);
+      white-space: nowrap;
+    }
+
+    /* Steps */
+    .steps { counter-reset: step; list-style: none; margin: 1rem 0; }
+
+    .step {
+      counter-increment: step;
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      position: relative;
+    }
+
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 2.75rem;
+      bottom: 0;
+      width: 2px;
+      background: var(--coffee-200);
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+      color: white;
+    }
+
+    .step-num::before { content: counter(step); }
+
+    .step-text {
+      padding-top: 0.3rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .step-sub {
+      margin-top: 0.4rem;
+      padding-left: 0.75rem;
+      border-left: 2px solid var(--coffee-200);
+      font-size: 0.82rem;
+      color: var(--coffee-600);
+    }
+
+    /* Tips */
+    .tips {
+      background: var(--coffee-50);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      margin-top: 1rem;
+      border: 1px solid var(--coffee-200);
+    }
+
+    .tips-title {
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--coffee-500);
+      margin-bottom: 0.5rem;
+    }
+
+    .tips ul { list-style: none; }
+
+    .tips li {
+      padding: 0.3rem 0;
+      font-size: 0.85rem;
+      padding-left: 1.25rem;
+      position: relative;
+      color: var(--coffee-600);
+    }
+
+    .tips li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Ratio calculator */
+    .calculator {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--coffee-100);
+    }
+
+    .calc-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .calc-field label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--coffee-500);
+      margin-bottom: 0.35rem;
+    }
+
+    .calc-input-wrap {
+      display: flex;
+      align-items: center;
+      background: var(--coffee-50);
+      border: 2px solid var(--coffee-200);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .calc-input-wrap:focus-within { border-color: var(--accent); }
+
+    .calc-input-wrap input {
+      flex: 1;
+      padding: 0.65rem 0.75rem;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--coffee-800);
+      outline: none;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .calc-input-wrap .unit {
+      padding: 0 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--coffee-400);
+      white-space: nowrap;
+    }
+
+    .calc-result {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .calc-result-item {
+      background: var(--coffee-100);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      text-align: center;
+    }
+
+    .calc-result-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--coffee-800);
+    }
+
+    .calc-result-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--coffee-500);
+      margin-top: 0.15rem;
+    }
+
+    /* Ratio table */
+    .ratio-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.85rem;
+      margin: 0.75rem 0;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--coffee-200);
+    }
+
+    .ratio-table th {
+      padding: 0.6rem 0.75rem;
+      background: var(--drip-amber);
+      color: white;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+
+    .ratio-table td {
+      padding: 0.55rem 0.75rem;
+      text-align: center;
+      border-bottom: 1px solid var(--coffee-100);
+    }
+
+    .ratio-table tr:last-child td { border-bottom: none; }
+    .ratio-table tr:nth-child(even) td { background: var(--coffee-50); }
+
+    .ratio-table .highlight td {
+      background: rgba(201, 148, 58, 0.12);
+      font-weight: 600;
+    }
+
+    /* Checklist */
+    .checklist { list-style: none; }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--coffee-100);
+      font-size: 0.9rem;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      border: 2px solid var(--coffee-300);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+      margin-top: 1px;
+    }
+
+    .checklist li.checked .check-box {
+      background: var(--success);
+      border-color: var(--success);
+    }
+
+    .check-box svg {
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .checklist li.checked .check-box svg { opacity: 1; }
+
+    .checklist li.checked .check-label {
+      text-decoration: line-through;
+      color: var(--coffee-400);
+    }
+
+    .check-label { padding-top: 2px; }
+
+    /* Progress bar */
+    .progress-wrap {
+      margin-bottom: 1.25rem;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--coffee-600);
+    }
+
+    .progress-count {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--success);
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: var(--coffee-200);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--success);
+      border-radius: 100px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    /* Summary table */
+    .summary-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.78rem;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--coffee-200);
+    }
+
+    .summary-table th {
+      padding: 0.55rem 0.5rem;
+      background: var(--coffee-800);
+      color: var(--cream);
+      font-weight: 600;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      text-align: center;
+    }
+
+    .summary-table th:first-child { text-align: left; }
+
+    .summary-table td {
+      padding: 0.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--coffee-100);
+    }
+
+    .summary-table td:first-child {
+      text-align: left;
+      font-weight: 500;
+    }
+
+    .summary-table tr:last-child td { border-bottom: none; }
+    .summary-table tr:nth-child(even) td { background: var(--coffee-50); }
+
+    .summary-table .check-cell { color: var(--success); font-weight: 700; }
+    .summary-table .empty-cell { color: var(--coffee-300); }
+
+    /* Color themes per recipe */
+    .theme-tonic .card-icon { background: rgba(74, 158, 187, 0.12); color: var(--tonic-blue); }
+    .theme-tonic .step-num { background: var(--tonic-blue); }
+    .theme-tonic .type-badge { background: rgba(74, 158, 187, 0.1); color: var(--tonic-blue); }
+
+    .theme-latte .card-icon { background: rgba(139, 107, 176, 0.12); color: var(--latte-purple); }
+    .theme-latte .step-num { background: var(--latte-purple); }
+    .theme-latte .type-badge { background: rgba(139, 107, 176, 0.1); color: var(--latte-purple); }
+
+    .theme-drip .card-icon { background: rgba(201, 148, 58, 0.12); color: var(--drip-amber); }
+    .theme-drip .step-num { background: var(--drip-amber); }
+    .theme-drip .type-badge { background: rgba(201, 148, 58, 0.1); color: var(--drip-amber); }
+
+    /* Section header */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: white;
+    }
+
+    .section-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.75rem;
+      color: var(--coffee-400);
+    }
+
+    .footer strong { color: var(--coffee-600); }
+
+    /* PWA install prompt */
+    .install-banner {
+      display: none;
+      position: fixed;
+      bottom: 1rem;
+      left: 1rem;
+      right: 1rem;
+      max-width: 568px;
+      margin: 0 auto;
+      background: var(--coffee-800);
+      color: var(--cream);
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      z-index: 200;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .install-banner p { flex: 1; font-size: 0.85rem; }
+    .install-banner button {
+      padding: 0.5rem 1rem;
+      border-radius: 100px;
+      border: none;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .install-btn { background: var(--accent); color: white; }
+    .install-dismiss { background: transparent; color: var(--coffee-400); }
+
+    @media (min-width: 640px) {
+      .hero h1 { font-size: 2.5rem; }
+      .main { padding: 1.5rem 2rem 6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-badge">☕ Manual de Recetas</div>
+    <h1>Salentino <span>×</span> Calcot</h1>
+    <p class="hero-sub">Guía de preparación de bebidas a base de café para el equipo en evento.</p>
+    <div class="hero-dates">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Nov 2026 — Ene 2027
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="nav-wrap">
+    <div class="nav">
+      <button class="nav-btn active" data-target="tonic">
+        <span class="dot" style="background: var(--tonic-blue)"></span>
+        Cold Brew Tonic
+      </button>
+      <button class="nav-btn" data-target="latte">
+        <span class="dot" style="background: var(--latte-purple)"></span>
+        Ice Latte
+      </button>
+      <button class="nav-btn" data-target="drip">
+        <span class="dot" style="background: var(--drip-amber)"></span>
+        Café Cafetera
+      </button>
+      <button class="nav-btn" data-target="checklist">
+        <span class="dot" style="background: var(--success)"></span>
+        Checklist
+      </button>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- Cold Brew Tonic -->
+    <section id="tonic" class="recipe-section active theme-tonic">
+      <div class="section-header">
+        <div class="section-number" style="background: var(--tonic-blue)">1</div>
+        <h2 class="section-name">Cold Brew Tonic</h2>
+      </div>
+
+      <div class="card open">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-title">
+            <div class="card-icon">🧊</div>
+            Ingredientes
+          </div>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <span class="type-badge">Bebida fría · Refrescante</span>
+            <table class="ingredient-table">
+              <thead><tr><th>Ingrediente</th><th>Cantidad</th></tr></thead>
+              <tbody>
+                <tr><td>Cold brew Salentino</td><td class="qty">120–150 ml</td></tr>
+                <tr><td>Agua tónica</td><td class="qty">Hasta llenar</td></tr>
+                <tr><td>Limón deshidratado</td><td class="qty">1 rodaja</td></tr>
+                <tr><td>Hielo</td><td class="qty">Al gusto</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-title">
+            <div class="card-icon">📋</div>
+            Paso a paso
+          </div>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <ol class="steps">
+              <li class="step"><div class="step-num"></div><div class="step-text">Llenar el vaso con hielo hasta ¾ de su capacidad.</div></li>
+              <li class="step"><div class="step-num"></div><div class="step-text">Verter <strong>120 a 150 ml</strong> de cold brew sobre el hielo.</div></li>
+              <li class="step"><div class="step-num"></div><div class="step-text">Completar con agua tónica hasta el borde del vaso.</div></li>
+              <li class="step"><div class="step-num"></div><div class="step-text">Agitar <strong>suavemente</strong> con cuchara de bar, de abajo hacia arriba, para integrar sin perder carbonatación.</div></li>
+              <li class="step"><div class="step-num"></div><div class="step-text">Colocar una rodaja de limón deshidratado sobre la superficie.</div></li>
+              <li class="step"><div class="step-num"></div><div class="step-text">Servir de inmediato.</div></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-title">
+            <div class="card-icon">💡</div>
+            Tips del equipo
+          </div>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="tips">
+              <ul>
+                <li>No agitar con fuerza: la tónica pierde gas.</li>
+                <li>El limón deshidratado aporta aroma y presentación; no sumergirlo.</li>
+                <li>Ajustar cold brew según vaso: 120 ml para 300 ml, 150 ml para 400 ml.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ice Latte -->
+    <section id="latte" class="recipe-section theme-latte">
+      <div class="section-header">
+        <div class="section-number" style="background: var(--latte-purple)">2</div>
+        <h2 class="section-name">Ice Latte / Cold Brew Latte</h2>
+      </div>
+
+      <div class="card open">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-title">
+            <div class="card-icon">🥛</div>
+            Ingredientes
+          </div>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <span class="type-badge">Bebida fría · Cremosa · Personalizable</span>
+            <table class="ingredient-table">
+              <thead><tr><th>Ingrediente</th><th>Cantidad</th></tr></thead>
+              <tbody>
+                <tr><td>Cold brew Salentino</td><td class="qty">Hasta completar</td></tr>
+                <tr><td>Leche (deslactosada, avena o almendras)</td><td class="qty">120–150 ml</td></tr>
+                <tr><td>Sirope (vainilla, caramelo, etc.)</td><td class="qty">1–2 pumps</td></tr>
+                <tr><td>Hielo</td><td class="qty">Al gusto</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-title">
+            <div class="card-icon">📋</div>
+            Paso a paso
+          </div>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <ol class="steps">
+              <li class="step">
+                <div class="step-num"></div>
+                <div class="step-text">
+                  Agregar sirope al vaso (1 o 2 pumps).
+                  <div class="step-sub">
+                    <strong>Intensos</strong> (caramelo, avellana): 1 pump.<br>
+                    <strong>Suaves</strong> (vainilla, coco): 2 pumps.
+                  </div>
+                </div>
+              </li>
+              <li class="step"><div class="step-num"></div><div class="step-text">Verter <strong>120 a 150 ml</strong> de la leche elegida por el cliente.</div></li>
+              <li class="step"><div class="step-num"></div><div class="step-text">Agitar la leche con el sirope usando cuchara hasta integrar completamente.</div></li>
+              <li class="step"><div class="step-num"></div><div class="step-text">Añadir hielo hasta ¾ del vaso.</div></li>
+              <li class="step"><div class="step-num"></div><div class="step-text">Verter cold brew lentamente hasta llenar el vaso.</div></li>
+              <li class="step"><div class="step-num"></div><div class="step-text">Servir sin mezclar para lograr el efecto degradado.</div></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-title">
+            <div class="card-icon">💡</div>
+            Tips del equipo
+          </div>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="tips">
+              <ul>
+                <li>Siempre preguntar al cliente: tipo de leche y sabor de sirope.</li>
+                <li>El cold brew va al final para crear la separación visual de capas.</li>
+                <li>Si el cliente pide mezclado, agitar después de servir.</li>
+                <li>Leche de avena genera mejor espuma natural; almendras es más ligera.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Café en Cafetera -->
+    <section id="drip" class="recipe-section theme-drip">
+      <div class="section-header">
+        <div class="section-number" style="background: var(--drip-amber)">3</div>
+        <h2 class="section-name">Café en Cafetera</h2>
+      </div>
+
+      <!-- Calculator -->
+      <div class="calculator">
+        <div class="calc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--drip-amber)" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
+          Calculadora de ratio
+        </div>
+        <div class="calc-grid">
+          <div class="calc-field">
+            <label>Tazas</label>
+            <div class="calc-input-wrap">
+              <input type="number" id="cups" value="5" min="1" max="20" inputmode="numeric" oninput="calculateRatio()">
+              <span class="unit">tazas</span>
+            </div>
+          </div>
+          <div class="calc-field">
+            <label>Ratio</label>
+            <div class="calc-input-wrap">
+              <input type="number" id="ratio" value="16" min="14" max="18" step="0.5" inputmode="decimal" oninput="calculateRatio()">
+              <span class="unit">ml/g</span>
+            </div>
+          </div>
+        </div>
+        <div class="calc-result">
+          <div class="calc-result-item">
+            <div class="calc-result-value" id="result-coffee">60</div>
+            <div class="calc-result-label">gramos de café</div>
+          </div>
+          <div class="calc-result-item">
+            <div class="calc-result-value" id="result-water">960</div>
+            <div class="calc-result-label">ml de agua</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card open">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-title">
+            <div class="card-icon">📊</div>
+            Tabla de referencia rápida
+          </div>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <p style="font-size: 0.85rem; color: var(--coffee-600); margin-bottom: 0.75rem;">Base: 12 g por taza · Ratio 1:16</p>
+            <table class="ratio-table">
+              <thead><tr><th>Tazas</th><th>Café (g)</th><th>Agua (ml)</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>12</td><td>192</td></tr>
+                <tr><td>2</td><td>24</td><td>384</td></tr>
+                <tr><td>3</td><td>36</td><td>576</td></tr>
+                <tr><td>4</td><td>48</td><td>768</td></tr>
+                <tr class="highlight"><td>5</td><td>60</td><td>960</td></tr>
+                <tr><td>6</td><td>72</td><td>1152</td></tr>
+                <tr><td>8</td><td>96</td><td>1536</td></tr>
+                <tr><td>10</td><td>120</td><td>1920</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-title">
+            <div class="card-icon">📋</div>
+            Paso a paso
+          </div>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <ol class="steps">
+              <li class="step"><div class="step-num"></div><div class="step-text">Pesar el café según la tabla (usar balanza de cocina).</div></li>
+              <li class="step"><div class="step-num"></div><div class="step-text">Moler a punto medio si se muele en sitio; premolido usar tal cual.</div></li>
+              <li class="step"><div class="step-num"></div><div class="step-text">Medir el agua según la tabla y verterla en el depósito.</div></li>
+              <li class="step"><div class="step-num"></div><div class="step-text">Colocar filtro y distribuir el café molido de manera uniforme.</div></li>
+              <li class="step"><div class="step-num"></div><div class="step-text">Encender la cafetera y esperar el ciclo completo.</div></li>
+              <li class="step"><div class="step-num"></div><div class="step-text">Servir inmediatamente después de la extracción.</div></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-title">
+            <div class="card-icon">💡</div>
+            Tips del equipo
+          </div>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="tips">
+              <ul>
+                <li>No recalentar el café; preparar lotes frescos según demanda.</li>
+                <li>Si la cafetera no tiene marcas, medir agua con jarra medidora.</li>
+                <li>Más intenso: ratio 1:15 (12 g × 15 = 180 ml/taza).</li>
+                <li>Más suave: ratio 1:17 (12 g × 17 = 204 ml/taza).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Checklist -->
+    <section id="checklist" class="recipe-section">
+      <div class="section-header">
+        <div class="section-number" style="background: var(--success)">✓</div>
+        <h2 class="section-name">Checklist de Montaje</h2>
+      </div>
+
+      <div class="card open" style="border: none; box-shadow: none; background: transparent;">
+        <div class="card-body" style="max-height: none;">
+          <div class="card-content" style="padding: 0;">
+            <div class="progress-wrap">
+              <div class="progress-header">
+                <span class="progress-label">Progreso del montaje</span>
+                <span class="progress-count" id="progress-text">0 / 9</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+              </div>
+            </div>
+
+            <ul class="checklist" id="checklist-items">
+              <li data-key="cb-1" onclick="toggleCheck(this)">
+                <div class="check-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="check-label">Cold brew Salentino embotellado y refrigerado</span>
+              </li>
+              <li data-key="cb-2" onclick="toggleCheck(this)">
+                <div class="check-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="check-label">Café molido Salentino para cafetera</span>
+              </li>
+              <li data-key="cb-3" onclick="toggleCheck(this)">
+                <div class="check-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="check-label">Agua tónica suficiente para el turno</span>
+              </li>
+              <li data-key="cb-4" onclick="toggleCheck(this)">
+                <div class="check-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="check-label">Leches vegetales refrigeradas (deslactosada, avena, almendras)</span>
+              </li>
+              <li data-key="cb-5" onclick="toggleCheck(this)">
+                <div class="check-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="check-label">Siropes con dispensador (verificar bombas funcionales)</span>
+              </li>
+              <li data-key="cb-6" onclick="toggleCheck(this)">
+                <div class="check-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="check-label">Limones deshidratados en recipiente seco</span>
+              </li>
+              <li data-key="cb-7" onclick="toggleCheck(this)">
+                <div class="check-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="check-label">Hielo en cantidad (1 kg por cada 10 bebidas frías)</span>
+              </li>
+              <li data-key="cb-8" onclick="toggleCheck(this)">
+                <div class="check-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="check-label">Vasos, cucharas de bar, jarra medidora, balanza</span>
+              </li>
+              <li data-key="cb-9" onclick="toggleCheck(this)">
+                <div class="check-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="check-label">Cafetera limpia y lista</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary table -->
+      <div class="card" style="margin-top: 0.5rem;">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-title">
+            <div class="card-icon" style="background: rgba(74, 139, 92, 0.12); color: var(--success);">📦</div>
+            Resumen de insumos por bebida
+          </div>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div style="overflow-x: auto;">
+              <table class="summary-table">
+                <thead>
+                  <tr>
+                    <th>Insumo</th>
+                    <th style="background: var(--tonic-blue);">Tonic</th>
+                    <th style="background: var(--latte-purple);">Latte</th>
+                    <th style="background: var(--drip-amber);">Cafetera</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Cold brew</td><td class="check-cell">120–150 ml</td><td class="check-cell">Completar</td><td class="empty-cell">—</td></tr>
+                  <tr><td>Café molido</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td class="check-cell">12 g/taza</td></tr>
+                  <tr><td>Agua tónica</td><td class="check-cell">Llenar</td><td class="empty-cell">—</td><td class="empty-cell">—</td></tr>
+                  <tr><td>Agua</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td class="check-cell">192 ml/taza</td></tr>
+                  <tr><td>Leche vegetal</td><td class="empty-cell">—</td><td class="check-cell">120–150 ml</td><td class="empty-cell">—</td></tr>
+                  <tr><td>Sirope</td><td class="empty-cell">—</td><td class="check-cell">1–2 pumps</td><td class="empty-cell">—</td></tr>
+                  <tr><td>Limón deshidratado</td><td class="check-cell">1 rodaja</td><td class="empty-cell">—</td><td class="empty-cell">—</td></tr>
+                  <tr><td>Hielo</td><td class="check-cell">Si</td><td class="check-cell">Si</td><td class="empty-cell">—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <strong>Salentino</strong> — Aliado de bebidas para Calcot<br>
+    Nov 2026 – Ene 2027
+  </footer>
+
+  <script>
+    // Navigation
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.recipe-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(btn.dataset.target).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    // Accordion cards
+    function toggleCard(header) {
+      header.closest('.card').classList.toggle('open');
+    }
+
+    // Ratio calculator
+    function calculateRatio() {
+      const cups = parseInt(document.getElementById('cups').value) || 0;
+      const ratio = parseFloat(document.getElementById('ratio').value) || 16;
+      const coffee = cups * 12;
+      const water = Math.round(coffee * ratio);
+      document.getElementById('result-coffee').textContent = coffee;
+      document.getElementById('result-water').textContent = water;
+    }
+
+    // Checklist with localStorage
+    function toggleCheck(li) {
+      li.classList.toggle('checked');
+      saveChecklist();
+      updateProgress();
+    }
+
+    function saveChecklist() {
+      const state = {};
+      document.querySelectorAll('#checklist-items li').forEach(li => {
+        state[li.dataset.key] = li.classList.contains('checked');
+      });
+      localStorage.setItem('salentino-checklist', JSON.stringify(state));
+    }
+
+    function loadChecklist() {
+      try {
+        const state = JSON.parse(localStorage.getItem('salentino-checklist'));
+        if (!state) return;
+        document.querySelectorAll('#checklist-items li').forEach(li => {
+          if (state[li.dataset.key]) li.classList.add('checked');
+        });
+      } catch (e) { /* ignore */ }
+    }
+
+    function updateProgress() {
+      const items = document.querySelectorAll('#checklist-items li');
+      const checked = document.querySelectorAll('#checklist-items li.checked');
+      const total = items.length;
+      const done = checked.length;
+      document.getElementById('progress-text').textContent = `${done} / ${total}`;
+      document.getElementById('progress-fill').style.width = `${(done / total) * 100}%`;
+    }
+
+    // Init
+    loadChecklist();
+    updateProgress();
+    calculateRatio();
+  </script>
+</body>
+</html>
